@@ -9,8 +9,8 @@ public class SpecSheet {
 		// 第1階層
 		// String firstPath = "C:\\specsheet";
 
-		String firstPath = null;		
-		if (args.length == 0) {//引数なしの場合はカレントディレクトリを代入
+		String firstPath = null;
+		if (args.length == 0) {// 引数なしの場合はカレントディレクトリを代入
 			firstPath = new File(".").getAbsoluteFile().getParent();
 			searchPersonalEngineerIdAndSpecSheetUpdateDate(firstPath);
 		} else if (args.length == 1) {
@@ -41,7 +41,7 @@ public class SpecSheet {
 					targetFolder = new File(firstPath + secondPath + thirdPath);
 					// 最終階層
 					for (String fourthPath : targetFolder.list()) {
-						if (fourthPath.matches("[A-Z]{2}-\\d{3}-\\d{4}.xls.*$")) { // （例）NW_201_9999.xls(x) ||
+						if (fourthPath.matches("[NW|AP|ML]{2}-\\d{3}-\\d{4}.(xls|xlsx)$")) { // （例）NW_201_9999.xls(x) ||
 
 							String[] lastPathList = fourthPath.split("-", 3);// 最終階層を - で分割
 							String lastPath = lastPathList[2];// 分割した前から三番目の文字列を取得
