@@ -1,7 +1,9 @@
+package Batch;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 
-public class specSheet {
+public class SpecSheet {
 	public static void main(String[] args) {
 
 		// 第1階層
@@ -20,7 +22,7 @@ public class specSheet {
 
 			// 第3階層
 			for (String thirdPath : targetFolder.list()) {
-				if (thirdPath.matches("^[0-9]{6}_[ァ-ヶー]+_.*")) {// yyyymm_カナ文字_（例）201108_ラクスタロウ_ラクス太郎
+				if (thirdPath.matches("^[0-9]{6}_.*")) {// yyyymm_カナ文字_（例）201108_ラクスタロウ_ラクス太郎
 
 					targetFolder = new File(firstPath + secondPath + thirdPath);
 					// 最終階層
@@ -35,15 +37,15 @@ public class specSheet {
 
 							// 最終的なpath
 							targetFolder = new File(firstPath + secondPath + thirdPath + "\\" + fourthPath);
-							System.out.println("path: " + targetFolder);
-							System.out.println("社員番号: " + personalEngineerId);
 
 							// 最終更新日時の取得
 							SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 							Long lastModified = targetFolder.lastModified();
 							String lastModifiedStr = sdf.format(lastModified);// 見やすいように整形
-							System.out.println("最終更新日時: " + lastModifiedStr);
-							System.out.println("");
+							System.out.println(personalEngineerId + "," + lastModifiedStr + "," + targetFolder);// 社員番号
+																												// 最終更新日時
+																												// Path
+																												// ,区切り
 
 						}
 					}
@@ -52,4 +54,5 @@ public class specSheet {
 		}
 
 	}
+
 }
