@@ -6,9 +6,6 @@ import java.text.SimpleDateFormat;
 public class SpecSheet {
 	public static void main(String[] args) {
 
-		// 第1階層
-		// String firstPath = "C:\\specsheet";
-
 		String firstPath = null;
 		if (args.length == 0) {// 引数なしの場合はカレントディレクトリを代入
 			firstPath = new File(".").getAbsoluteFile().getParent();
