@@ -41,7 +41,7 @@ public class SpecSheet {
 					targetFolder = new File(firstPath + secondPath + thirdPath);
 					// 最終階層
 					for (String fourthPath : targetFolder.list()) {
-						if (fourthPath.matches("[NW|AP|ML]{2}-\\d{3}-\\d{4}.(xls|xlsx)$")) { // （例）NW_201_9999.xls(x) ||
+						if (fourthPath.matches("(NW|AP|ML)-\\d{3}-\\d{4}.(xls|xlsx)$")) { // （例）NW_201_9999.xls(x) ||
 
 							String[] lastPathList = fourthPath.split("-", 3);// 最終階層を - で分割
 							String lastPath = lastPathList[2];// 分割した前から三番目の文字列を取得
