@@ -62,33 +62,26 @@ public class SpecSheet {
 							Long lastModified = targetFolder.lastModified();
 							String lastModifiedStr = sdf.format(lastModified);// 見やすいように整形
 							String content = personalEngineerId + "," + lastModifiedStr + "," + targetFolder; // 社員番号
-							// 最終更新日時
-
 							list1.add(personalEngineerId);
-
 							if (list1.size() > 1) {
 								list2.add(personalEngineerId);
-								//System.out.println("二つの社員番号の比較　" + list1.get(i) + "  " + list2.get(i));
-
 								if (list1.get(i).equals(list2.get(i))) {
-									//System.out.println("社員番号同じ");
+
 									Long lastlastModified = lastModifiedList.get(lastModifiedList.size() - 1);// listの一つ前の最終更新日を取得
 									if (lastlastModified < lastModified) {// 一つ前の最終更新日の方が遅かったら
-										bigList.remove(bigList.size()-1);
+										bigList.remove(bigList.size() - 1);
 										bigList.add(content);
-										lastModifiedList.remove(lastModifiedList.size()-1);
+										lastModifiedList.remove(lastModifiedList.size() - 1);
 										lastModifiedList.add(lastModified);
 									} else {
-										
+
 									}
 
 								} else {
-									//System.out.println("社員番号違う");
 									bigList.add(personalEngineerId + "," + lastModifiedStr + "," + targetFolder);
 									lastModifiedList.add(lastModified);
 								}
 							} else {
-								//System.out.println("最初");
 								bigList.add(personalEngineerId + "," + lastModifiedStr + "," + targetFolder);
 								lastModifiedList.add(lastModified);
 							}
@@ -102,12 +95,9 @@ public class SpecSheet {
 				}
 
 			}
-
 		}
 		for (String content : bigList) {
 			System.out.println(content);
 		}
-//		System.out.println(list1);
-//		System.out.println(list2);
 	}
 }
