@@ -2,6 +2,8 @@ package batch;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpecSheet {
 	public static void main(String[] args) {
@@ -20,12 +22,19 @@ public class SpecSheet {
 	}
 
 	static void searchPersonalEngineerIdAndSpecSheetUpdateDate(String firstPath) {
+
+		ArrayList<String> list1 = new ArrayList<String>();
+		ArrayList<String> list2 = new ArrayList<String>();
+		ArrayList<String> bigList = new ArrayList<String>();
+		ArrayList<Long> lastModifiedList = new ArrayList<Long>();
 		// 第2階層
 		String PathNW = "\\01.NW\\";
 		String PathJava = "\\02.java\\";
 		String PathML = "\\04.ML\\";
 
 		String[] secondPathList = { PathNW, PathJava, PathML };
+
+		int i = 0;
 
 		for (String secondPath : secondPathList) {
 
@@ -38,7 +47,8 @@ public class SpecSheet {
 					targetFolder = new File(firstPath + secondPath + thirdPath);
 					// 最終階層
 					for (String fourthPath : targetFolder.list()) {
-						if (fourthPath.matches("(NW|AP|ML)-\\d{3}-\\d{4}.(xls|xlsx)$")) { // （例）NW_201_9999.xls(x) ||
+						if (fourthPath.matches("(NW|AP|ML)-\\d{3}-\\d{4}.*.(xls|xlsx|pdf)$")) { // （例）NW_201_9999.xls(x)
+																								// ||
 
 							String[] lastPathList = fourthPath.split("-", 3);// 最終階層を - で分割
 							String lastPath = lastPathList[2];// 分割した前から三番目の文字列を取得
@@ -51,17 +61,53 @@ public class SpecSheet {
 							SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 							Long lastModified = targetFolder.lastModified();
 							String lastModifiedStr = sdf.format(lastModified);// 見やすいように整形
-							System.out.println(personalEngineerId + "," + lastModifiedStr + "," + targetFolder);// 社員番号
-																												// 最終更新日時
-																												// Path
-																												// ,区切り
+							String content = personalEngineerId + "," + lastModifiedStr + "," + targetFolder; // 社員番号
+							// 最終更新日時
 
+							list1.add(personalEngineerId);
+
+							if (list1.size() > 1) {
+								list2.add(personalEngineerId);
+								//System.out.println("二つの社員番号の比較　" + list1.get(i) + "  " + list2.get(i));
+
+								if (list1.get(i).equals(list2.get(i))) {
+									//System.out.println("社員番号同じ");
+									Long lastlastModified = lastModifiedList.get(lastModifiedList.size() - 1);// listの一つ前の最終更新日を取得
+									if (lastlastModified < lastModified) {// 一つ前の最終更新日の方が遅かったら
+										bigList.remove(bigList.size()-1);
+										bigList.add(content);
+										lastModifiedList.remove(lastModifiedList.size()-1);
+										lastModifiedList.add(lastModified);
+									} else {
+										
+									}
+
+								} else {
+									//System.out.println("社員番号違う");
+									bigList.add(personalEngineerId + "," + lastModifiedStr + "," + targetFolder);
+									lastModifiedList.add(lastModified);
+								}
+							} else {
+								//System.out.println("最初");
+								bigList.add(personalEngineerId + "," + lastModifiedStr + "," + targetFolder);
+								lastModifiedList.add(lastModified);
+							}
+							if (list1.size() > 1) {
+								i++;
+							}
 						}
+
 					}
+
 				}
+
 			}
+
 		}
-
+		for (String content : bigList) {
+			System.out.println(content);
+		}
+//		System.out.println(list1);
+//		System.out.println(list2);
 	}
-
 }
