@@ -73,10 +73,7 @@ public class SpecSheet {
 										bigList.add(content);
 										lastModifiedList.remove(lastModifiedList.size() - 1);
 										lastModifiedList.add(lastModified);
-									} else {
-
 									}
-
 								} else {
 									bigList.add(personalEngineerId + "," + lastModifiedStr + "," + targetFolder);
 									lastModifiedList.add(lastModified);
